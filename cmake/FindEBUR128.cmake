@@ -4,38 +4,56 @@
 # EBUR128_FOUND, if false, do not try to link
 # EBUR128_INCLUDE_DIR, where to find header
 #
-set(EBUR128_FOUND FALSE)
 
-find_path(EBUR128_INCLUDE_DIR
-  NAMES ebur128.h
-  HINTS
-  PATH_SUFFIXES include
-  PATHS
-  ~/Library/Frameworks
-  /Library/Frameworks
-  /usr/local/include
-  /usr/include
-  /sw/include
-  /opt/local/include
-  /opt/csw/include
-  /opt/include
-  /mingw
-)
+INCLUDE(FindPkgConfig)
 
-find_library(EBUR128_LIBRARY
-  NAMES ebur128
-  HINTS
-  PATH_SUFFIXES lib64 lib
-  PATHS
-  /usr/local
-  /usr
-  /sw
-  /opt/local
-  /opt/csw
-  /opt
-  /mingw
-)
+PKG_CHECK_MODULES(EBUR128 libebur128)
 
-if(EBUR128_LIBRARY)
-  set(EBUR128_FOUND TRUE)
-endif(EBUR128_LIBRARY)
+IF (EBUR128_FOUND)
+
+  if(DEFINED EBUR128_STATIC_INCLUDE_DIRS)
+    set(EBUR128_INCLUDE_DIR EBUR128_STATIC_INCLUDE_DIRS)
+  else()
+    set(EBUR128_INCLUDE_DIR EBUR128_INCLUDE_DIRS)
+  endif(DEFINED EBUR128_STATIC_INCLUDE_DIRS)
+
+  if(DEFINED EBUR128_STATIC_LIBRARY_DIRS)
+    set(EBUR128_LIBRARY EBUR128_STATIC_LIBRARY_DIRS)
+  else()
+    set(EBUR128_LIBRARY EBUR128_LIBRARY_DIRS)
+  endif(DEFINED EBUR128_STATIC_LIBRARY_DIRS)
+ELSE ()
+  find_path(EBUR128_INCLUDE_DIR
+    NAMES ebur128.h
+    HINTS
+    PATH_SUFFIXES include
+    PATHS
+    ~/Library/Frameworks
+    /Library/Frameworks
+    /usr/local/include
+    /usr/include
+    /sw/include
+    /opt/local/include
+    /opt/csw/include
+    /opt/include
+    /mingw
+  )
+
+  find_library(EBUR128_LIBRARY
+    NAMES ebur128
+    HINTS
+    PATH_SUFFIXES lib64 lib
+    PATHS
+    /usr/local
+    /usr
+    /sw
+    /opt/local
+    /opt/csw
+    /opt
+    /mingw
+  )
+
+  if(EBUR128_LIBRARY)
+    set(EBUR128_FOUND TRUE)
+  endif(EBUR128_LIBRARY)
+ENDIF (EBUR128_FOUND)
