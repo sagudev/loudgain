@@ -623,16 +623,16 @@ int main(int argc, char *argv[]) {
 			// output something human-readable
 			printf("\nTrack: %s\n", scan -> file);
 
-			printf(" Loudness: %8.2f LUFS\n", scan -> track_loudness);
-			printf(" Range:    %8.2f %s\n", scan -> track_loudness_range, unit);
-			printf(" Peak:     %8.6f (%.2f dBTP)\n", scan -> track_peak, 20.0 * log10(scan -> track_peak));
+			printf(" Loudness: %f LUFS\n", scan -> track_loudness);
+			printf(" Range:    %f %s\n", scan -> track_loudness_range, unit);
+			printf(" Peak:     %f (%.2f dBTP)\n", scan -> track_peak, 20.0 * log10(scan -> track_peak));
 			if (scan -> codec_id == AV_CODEC_ID_OPUS) {
 				// also show the Q7.8 number that goes into R128_TRACK_GAIN
-				printf(" Gain:     %8.2f %s (%d)%s\n", scan -> track_gain, unit,
+				printf(" Gain:     %f %s (%d)%s\n", scan -> track_gain, unit,
 				 gain_to_q78num(scan -> track_gain),
 				 tclip ? " (corrected to prevent clipping)" : "");
 			} else {
-				printf(" Gain:     %8.2f %s%s\n", scan -> track_gain, unit,
+				printf(" Gain:     %f %s%s\n", scan -> track_gain, unit,
 				 tclip ? " (corrected to prevent clipping)" : "");
 			}
 
@@ -642,16 +642,16 @@ int main(int argc, char *argv[]) {
 			if ((i == (nb_files - 1)) && do_album) {
 				printf("\nAlbum:\n");
 
-				printf(" Loudness: %8.2f LUFS\n", scan -> album_loudness);
-				printf(" Range:    %8.2f %s\n", scan -> album_loudness_range, unit);
-				printf(" Peak:     %8.6f (%.2f dBTP)\n", scan -> album_peak, 20.0 * log10(scan -> album_peak));
+				printf(" Loudness: %f LUFS\n", scan -> album_loudness);
+				printf(" Range:    %f %s\n", scan -> album_loudness_range, unit);
+				printf(" Peak:     %f (%.2f dBTP)\n", scan -> album_peak, 20.0 * log10(scan -> album_peak));
 				if (scan -> codec_id == AV_CODEC_ID_OPUS) {
 					// also show the Q7.8 number that goes into R128_ALBUM_GAIN
-					printf(" Gain:     %8.2f %s (%d)%s\n", scan -> album_gain, unit,
+					printf(" Gain:     %f %s (%d)%s\n", scan -> album_gain, unit,
 					gain_to_q78num(scan -> album_gain),
 						aclip ? " (corrected to prevent clipping)" : "");
 				} else {
-					printf(" Gain:     %8.2f %s%s\n", scan -> album_gain, unit,
+					printf(" Gain:     %f %s%s\n", scan -> album_gain, unit,
 						aclip ? " (corrected to prevent clipping)" : "");
 				}
 			}
